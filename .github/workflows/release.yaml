@@ -2,12 +2,13 @@ name: Release Build
 
 # This workflow is triggered on pushes or pull request to the repository.
 on:
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Release Tag ( v*.*.*)'
-        required: true
-        type: string
+  push:
+  # workflow_dispatch:
+  #   inputs:
+  #     tag:
+  #       description: 'Release Tag ( v*.*.*)'
+  #       required: true
+  #       type: string
 
 jobs:
   Build:
@@ -39,25 +40,25 @@ jobs:
           name: release build
           path: artifacts/*.tar.gz
           if-no-files-found: error
-  Release:
-    needs: Build
-    name: Create a Release
-    env:
-      RELEASE_NAME: "knowhere-${{ github.event.inputs.tag }}"
-    runs-on: ubuntu-18.04
-    steps:
-      - name: Download Artifacts
-        uses: actions/download-artifact@v2
-        id: download
-        with:
-          name: release build
-      - name: Create a Release          
-        uses: ncipollo/release-action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          body: "Release : ${{ env.RELEASE_NAME }}"
-          artifacts: "*.tar.gz"
-          prerelease: true
-          tag: "${{ github.event.inputs.tag }}"
-          name: ${{ env.RELEASE_NAME }}
+  # Release:
+  #   needs: Build
+  #   name: Create a Release
+  #   env:
+  #     RELEASE_NAME: "knowhere-${{ github.event.inputs.tag }}"
+  #   runs-on: ubuntu-18.04
+  #   steps:
+  #     - name: Download Artifacts
+  #       uses: actions/download-artifact@v2
+  #       id: download
+  #       with:
+  #         name: release build
+  #     - name: Create a Release          
+  #       uses: ncipollo/release-action@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         body: "Release : ${{ env.RELEASE_NAME }}"
+  #         artifacts: "*.tar.gz"
+  #         prerelease: true
+  #         tag: "${{ github.event.inputs.tag }}"
+  #         name: ${{ env.RELEASE_NAME }}
