@@ -1,0 +1,8 @@
+*cmake-build-debug*
+*cmake-build-release*
+*cmake_build*
+*thirdparty*
+*knowhere/include*
+*knowhere/knowhere/utils*
+*knowhere/knowhere/common/Heap*
+*unittest*
